@@ -122,8 +122,46 @@ void listExpenses() {
 }
 
 void getMonthlyExpenseStatistics() {
-    // Implementation of this function is left as an exercise for you
+    int year;
+    printf("Enter the year: ");
+    scanf("%d", &year);
+
+    if (year <= 0 || year > 9999) {
+        printf("Invalid year. Please enter a year from 1 - 9999.\n");
+        return;
+    }
+
+    float monthlyExpenses[12] = {0}; // Initialize array to hold expenses for each month
+
+    // Iterate through expenses and accumulate total expenses for each month of the specified year
+    for (int i = 0; i < numExpenses; i++) {
+        int month;
+        sscanf(expenses[i].date, "%d-%*d-%*d", &month); // Extract month from date
+        int expenseYear;
+        sscanf(expenses[i].date, "%d", &expenseYear); // Extract year from date
+        if (expenseYear == year) {
+            monthlyExpenses[month - 1] += expenses[i].amount;
+        }
+    }
+
+    // Display the total expenses for each month
+    printf("\n||----------------------------------------------||\n");
+    printf("||              YEAR %d Monthly Expenses        ||\n", year);
+    printf("||----------------------------------------------||\n");
+    float total = 0, min = monthlyExpenses[0], max = monthlyExpenses[0];
+    for (int i = 0; i < 12; i++) {
+        total += monthlyExpenses[i];
+        if (monthlyExpenses[i] < min) min = monthlyExpenses[i];
+        if (monthlyExpenses[i] > max) max = monthlyExpenses[i];
+        printf("|| Month %2d: %.2f %s\n", i + 1, monthlyExpenses[i], expenses[0].currency);
+    }
+    printf("||----------------------------------------------||\n");
+    printf("|| Total Expenses: %.2f %s\n", total, expenses[0].currency);
+    printf("|| Minimum Expense: %.2f %s\n", min, expenses[0].currency);
+    printf("|| Maximum Expense: %.2f %s\n", max, expenses[0].currency);
+    printf("||----------------------------------------------||\n");
 }
+
 
 void saveExpensesToFile(const char* filename) {
     FILE *fp = fopen(filename, "a");
