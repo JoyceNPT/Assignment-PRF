@@ -10,7 +10,7 @@ typedef struct {
     char date[MAX_DATE_LENGTH];
     char category[MAX_CATEGORY_LENGTH];
     float amount;
-    char currency[4]; // Maximum currency string length including null terminator
+    char currency[4];
 } Expense;
 
 Expense expenses[MAX_EXPENSES];
@@ -82,8 +82,7 @@ int main() {
         printf("\nPress Enter to continue...");
         while (getchar() != '\n'); // Clear input buffer
         getchar(); // Wait for Enter
-        system("clear || cls"); // Clear screen
-
+        system("clear || cls");
     } while (choice != 5);
 
     return 0;
