@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
+
+#define MAX 2001000
 
 int main() {
     int n, m;
@@ -10,17 +13,20 @@ int main() {
         scanf("%d", &a[i]);
     }
 
+    bool found = false;
+    int hash[MAX] = {0};
+    for (int i = 0; i < n; i++) {
+        hash[a[i]] = true;
+    }
+
     while (1) {
-        int found = 0;
-        for (int i = 0; i < n; i++) {
-            if (a[i] == m) {
-                m += 2;
-                found = 1;
-                break;
-            }
+        found = false;
+        if (hash[m] == true) {
+            m += 2;
+            found = true;
         }
 
-        if (!found || m > 2001000) {
+        if (m > 2001000 || !found) {
             break;
         }
     }
